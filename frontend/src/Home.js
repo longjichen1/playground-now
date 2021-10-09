@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
-import DraggableShape from "./components/draggableShape";
+import Canvas from "./components/canvas";
 import background from "./assets/background.jpeg";
-
-
 
 class Home extends Component {
     constructor() {
@@ -17,7 +15,7 @@ class Home extends Component {
                     backgroundSize: document.body.scrollHeight * 1.35,
                 }}
             >
-                <DraggableShape />
+                <Canvas />
             </div>
         );
     }
