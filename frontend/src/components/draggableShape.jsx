@@ -6,8 +6,8 @@ class DraggableShape extends Component {
     state = {
         isDragging: false,
         radius: 70,
-        x: 70,
-        y: 70,
+        triangleX: 70,
+        triangleY: 70,
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight,
     };
@@ -18,12 +18,27 @@ class DraggableShape extends Component {
                 <Stage width={window.innerWidth} height={window.innerHeight}>
                     <Layer>
                         <RegularPolygon
-                            x={this.state.x}
-                            y={this.state.y}
+                            x={this.state.windowWidth / 2}
+                            y={this.state.windowHeight / 2}
+                            sides={3}
+                            radius={this.state.radius}
+                            stroke={"black"}
+                        />
+                        <RegularPolygon
+                            x={this.state.triangleX}
+                            y={this.state.triangleX}
                             sides={3}
                             radius={this.state.radius}
                             draggable
                             fill={"#fe657d"}
+                            stroke={"black"}
+                            strokeWidth={this.state.isDragging ? 4 : 0}
+                            onMouseDown={() => {
+                                this.setState({ isDragging: true });
+                            }}
+                            onMouseUp={() => {
+                                this.setState({ isDragging: false });
+                            }}
                             onDragStart={() => {
                                 this.setState({
                                     isDragging: true,

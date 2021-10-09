@@ -6,7 +6,6 @@ import background from "./assets/background.jpeg";
 class App extends Component {
     constructor() {
         super();
-        document.body.style = "background: #e3e3db;";
     }
     render() {
         return (
