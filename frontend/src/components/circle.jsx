@@ -30,7 +30,7 @@ class CircleP extends Component {
                     sides={3}
                     radius={this.state.radius}
                     draggable={!this.state.targetReached}
-                    fill={"#fe657d"}
+                    fill={this.props.fill}
                     stroke={"black"}
                     strokeWidth={this.state.isDragging ? 6 : 3}
                     onMouseDown={() => {
