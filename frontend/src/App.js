@@ -2,24 +2,16 @@ import React, { Component } from "react";
 import "./App.css";
 import DraggableShape from "./components/draggableShape";
 import background from "./assets/background.jpeg";
-
-class App extends Component {
-    constructor() {
-        super();
-        document.body.style = "background: #e3e3db;";
-    }
-    render() {
-        return (
-            <div
-                style={{
-                    backgroundImage: `url(${background})`,
-                    backgroundSize: document.body.scrollHeight * 1.35,
-                }}
-            >
-                <DraggableShape />
-            </div>
-        );
-    }
+import Matter from './Matter';
+import Home from './Home';
+import {Route, Link} from "react-router-dom";
+function App() {
+    return(
+        <div className="App">
+            <Route exact path="/" component = {Home}/>
+            <Route exact path="/matter" component = {Matter}/>
+        </div>
+    );
 }
 
 export default App;
