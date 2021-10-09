@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import Home from "./Home";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {BrowserRouter} from 'react-router-dom';
 
-
+import App from './App';
 import Matter from './Matter';
-import Home from './Home'
+
 ReactDOM.render(
     <BrowserRouter>
         <App /> 
