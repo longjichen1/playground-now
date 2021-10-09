@@ -33,7 +33,7 @@ class RingP extends Component {
                     innerRadius={this.state.innerRadius}
                     outerRadius={this.state.outerRadius}
                     draggable={!this.state.targetReached}
-                    fill={"#fe657d"}
+                    fill={this.props.fill}
                     stroke={"black"}
                     strokeWidth={this.state.isDragging ? 6 : 3}
                     onMouseDown={() => {
