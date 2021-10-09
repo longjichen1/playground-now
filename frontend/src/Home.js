@@ -3,7 +3,9 @@ import "./App.css";
 import DraggableShape from "./components/draggableShape";
 import background from "./assets/background.jpeg";
 
-class App extends Component {
+
+
+class Home extends Component {
     constructor() {
         super();
     }
@@ -20,5 +22,4 @@ class App extends Component {
         );
     }
 }
-
-export default App;
+export default Home;
