@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
@@ -10,6 +10,12 @@ import Canvas from "./components/canvas";
 import background from "./assets/background.jpeg";
 
 function Home() {
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
+
+    let min = 100000;
+    let max = -324343;
+
     const webcamRef = useRef(null);
 
     const runHandPose = async () => {
@@ -36,7 +42,15 @@ function Home() {
 
             const hand = await net.estimateHands(video);
             if (hand.length == 1) {
-                console.log(hand[0].boundingBox.topLeft);
+                if ((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 < min) {
+                    min = (hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2;
+                }
+                if ((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 > max) {
+                    max = (hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2;
+                }
+                console.log((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2);
+                console.log(`MIN: ${min}`);
+                console.log(`MAX: ${max}`);
             }
             if (hand.length > 0) {
                 const GE = new fp.GestureEstimator([pinchGesture]);
