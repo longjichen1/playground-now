@@ -23,6 +23,7 @@ class Canvas extends Component {
             shapeIndices: this.shuffleIndices(this.state.shapeIndices),
             targetIndices: this.shuffleIndices(this.state.targetIndices),
             colors: this.shuffleIndices(this.state.colors),
+            snap: false,
         });
     }
 
@@ -39,6 +40,7 @@ class Canvas extends Component {
     };
 
     componentDidUpdate() {
+
         let snap = [...this.state.snap];
         let active = [...this.state.active];
 
@@ -61,6 +63,7 @@ class Canvas extends Component {
                 active[this.state.shapeIdx] = true;
                 this.setState({ active });
             }
+
         }
     }
 
@@ -71,6 +74,7 @@ class Canvas extends Component {
                     <Layer>
                         <PolygonP
                             shapeX={
+
                                 this.state.snap[0]
                                     ? (this.state.targetIndices[0] * window.innerWidth) / 6
                                     : this.state.shapeIdx === 0
@@ -88,6 +92,7 @@ class Canvas extends Component {
                                         : (2 * window.innerHeight) / 3
                                     : (2 * window.innerHeight) / 3
                             }
+
                             targetX={(this.state.targetIndices[0] * window.innerWidth) / 6}
                             targetY={window.innerHeight / 3}
                             sides={3}
