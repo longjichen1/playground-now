@@ -21,6 +21,9 @@ setup();
 function Home() {
     const [shapeX, setX] = useState(0);
     const [shapeY, setY] = useState(0);
+    const [curX, setCurX] = useState(0);
+    const [curY, setCurY] = useState(0);
+    const [active, setActive] = useState(false);
     let move = false;
 
     const webcamRef = useRef(null);
@@ -70,6 +73,27 @@ function Home() {
                     (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
                         window.innerHeight
                 );
+                setCurX(
+                    window.innerWidth -
+                        (((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 - 20) / 600.0) *
+                            window.innerWidth
+                );
+                setCurY(
+                    (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
+                        window.innerHeight
+                );
+                setActive(true);
+            } else if (hand.length == 1 && !move) {
+                setCurX(
+                    window.innerWidth -
+                        (((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 - 20) / 600.0) *
+                            window.innerWidth
+                );
+                setCurY(
+                    (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
+                        window.innerHeight
+                );
+                setActive(false);
             }
         }
     };
@@ -83,7 +107,7 @@ function Home() {
                 backgroundSize: document.body.scrollHeight * 1.35,
             }}
         >
-            <Canvas shapeX={shapeX} shapeY={shapeY} />
+            <Canvas shapeX={shapeX} shapeY={shapeY} curX={curX} curY={curY} active={active} />
             <Webcam
                 ref={webcamRef}
                 style={{
