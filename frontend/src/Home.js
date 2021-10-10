@@ -21,6 +21,7 @@ setup();
 function Home() {
     const [shapeX, setX] = useState(0);
     const [shapeY, setY] = useState(0);
+    const [moving, setMove] = useState(false);
 
     const webcamRef = useRef(null);
 
@@ -44,17 +45,9 @@ function Home() {
             webcamRef.current.video.height = videoHeight;
 
             const hand = await net.estimateHands(video);
-            if (hand.length == 1) {
-                setX(
-                    (((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 - 20) / 600.0) *
-                        window.innerWidth
-                );
-                setY(
-                    (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
-                        window.innerHeight
-                );
-                console.log(shapeX, shapeY, "IN HOME");
-            }
+
+            setMove(true);
+
             if (hand.length > 0) {
                 const GE = new fp.GestureEstimator([pinchGesture]);
 
@@ -62,9 +55,23 @@ function Home() {
 
                 try {
                     console.log(gesture.gestures[0].name);
+                    setMove(true);
                 } catch (TypeError) {
                     console.log("no pinch");
+                    setMove(false);
                 }
+            }
+
+            if (hand.length == 1 && moving) {
+                setX(
+                    window.innerWidth -
+                        (((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 - 20) / 600.0) *
+                            window.innerWidth
+                );
+                setY(
+                    (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
+                        window.innerHeight
+                );
             }
         }
     };
@@ -78,7 +85,7 @@ function Home() {
                 backgroundSize: document.body.scrollHeight * 1.35,
             }}
         >
-            <Canvas shapeX={shapeX} shapeY={shapeY} />
+            <Canvas shapeX={shapeX} shapeY={shapeY} moving={moving} />
             <Webcam
                 ref={webcamRef}
                 style={{
@@ -89,6 +96,7 @@ function Home() {
                     width: 240,
                     height: 180,
                 }}
+                mirrored
             />
         </div>
     );
