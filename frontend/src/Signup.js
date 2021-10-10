@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import {Form, Button, Navbar, Container} from 'react-bootstrap';
 
 import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
-
+import Nav from './Nav';
 import {Link} from 'react-router-dom';
 
 const Signup = ({history}) => {
@@ -34,20 +34,7 @@ const Signup = ({history}) => {
     return(
         
         <>
-  <Navbar bg="dark" variant="dark">
-    <Container>
-      <Navbar.Brand href="#home">
-        <img
-          alt=""
-          src="/logo.svg"
-          width="30"
-          height="50"
-          className="d-inline-block align-center text-align-center"
-        />{' '}
-      Sandbox
-      </Navbar.Brand>
-    </Container>
-  </Navbar>
+        <Nav/>
 
         <Form className="p-4">
             <Form.Group className="mb-3" controlId="formBasicPassword">

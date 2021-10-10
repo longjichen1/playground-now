@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 import {Form, Button, Navbar, Container} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-
+import Nav from './Nav';
 
 
 const Login = ({history}) => {
@@ -30,20 +30,7 @@ const Login = ({history}) => {
     }
     return(
     <>
-      <Navbar className="bg-primary" variant="dark">
-    <Container>
-      <Navbar.Brand href="#home" className="align-center">
-        <img
-          alt=""
-          src="/logo.svg"
-          width="30"
-          height="50"
-          className="d-inline-block align-center text-align-center"
-        />{' '}
-      Sandbox
-      </Navbar.Brand>
-    </Container>
-  </Navbar>
+    <Nav/>
         <Form className="p-4">
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="text-left">Email address</Form.Label>

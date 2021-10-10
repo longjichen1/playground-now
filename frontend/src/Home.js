@@ -10,7 +10,7 @@ import Canvas from "./components/canvas";
 import background from "./assets/background.jpeg";
 import {Button, Navbar, Container} from 'react-bootstrap';
 import { getAuth, signOut } from '@firebase/auth';
-
+import Nav from './Nav';
 let net = null;
 
 async function setup() {
@@ -105,23 +105,24 @@ function Home({history}) {
             }}
         >
                 
-      <Navbar className="bg-primary" variant="dark">
-    <Container>
-      <Navbar.Brand href="#home" className="align-center">
-        <img
-          alt=""
-          src="/logo.svg"
-          width="30"
-          height="50"
-          className="d-inline-block align-center text-align-center"
-        />{' '}
-      Sandbox
-      </Navbar.Brand>
-    </Container>
-  </Navbar>
-            <Button variant = "primary" onClick={logout}>
-                {user && user.displayName}
-            </Button>
+        <Navbar className="bg-info" variant="dark">
+            <Container>
+                <Navbar.Brand href="#home" className="align-center">
+                    <img
+                        alt=""
+                        src="https://mpng.subpng.com/20171127/e92/transparent-sand-castle-png-clipart-picture-5a1ca2a4c75547.2673685315118260848165.jpg"
+                        width="50"
+                        height="50"
+                        className="d-inline-block align-center text-align-center"
+                    />{' '}
+                    Sandbox     Welcome, {user && user.displayName}
+                </Navbar.Brand>
+                <Button variant = "secondary" onClick={logout}>
+                    Logout
+                </Button>
+            </Container>
+        </Navbar>
+            
             <Canvas shapeX={shapeX} shapeY={shapeY} />
             <Webcam
                 ref={webcamRef}

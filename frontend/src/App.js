@@ -10,6 +10,7 @@ import Signup from './Signup';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from '@firebase/auth';
 import Dashboard from './Dashboard';
+import Nav from './Nav';
 const firebaseConfig={
     apiKey:"AIzaSyBsOonoZdkQJH1bT1J5h-n4WJscXQwfbQY",
     authDomain:"sandbox-39bee.firebaseapp.com",
@@ -22,10 +23,10 @@ initializeApp(firebaseConfig);
 function App() {
     return (
         <div className="App">
+            
             <Route exact path="/" component={Login}/>
             <Route exact path="/home" component = {Home}/>
             <Route exact path="/matter" component = {Matter}/>
-            <Route exact path="/login" component ={Login}/>
             <Route exact path='/signup' component={Signup}/>
         </div>
     );
