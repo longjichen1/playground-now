@@ -9,19 +9,22 @@ import "./App.css";
 import Canvas from "./components/canvas";
 import background from "./assets/background.jpeg";
 
-function Home() {
-    const [x, setX] = useState(0);
-    const [y, setY] = useState(0);
+let net = null;
 
-    let min = 100000;
-    let max = -324343;
+async function setup() {
+    net = await handpose.load();
+    console.log("Handpose model loaded.");
+}
+
+setup();
+
+function Home() {
+    const [shapeX, setX] = useState(0);
+    const [shapeY, setY] = useState(0);
 
     const webcamRef = useRef(null);
 
     const runHandPose = async () => {
-        const net = await handpose.load();
-        console.log("Handpose model loaded.");
-
         setInterval(() => {
             detect(net);
         }, 100);
@@ -42,15 +45,15 @@ function Home() {
 
             const hand = await net.estimateHands(video);
             if (hand.length == 1) {
-                if ((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 < min) {
-                    min = (hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2;
-                }
-                if ((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 > max) {
-                    max = (hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2;
-                }
-                console.log((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2);
-                console.log(`MIN: ${min}`);
-                console.log(`MAX: ${max}`);
+                setX(
+                    (((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 - 20) / 600.0) *
+                        window.innerWidth
+                );
+                setY(
+                    (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
+                        window.innerHeight
+                );
+                console.log(shapeX, shapeY, "IN HOME");
             }
             if (hand.length > 0) {
                 const GE = new fp.GestureEstimator([pinchGesture]);
@@ -75,7 +78,7 @@ function Home() {
                 backgroundSize: document.body.scrollHeight * 1.35,
             }}
         >
-            <Canvas />
+            <Canvas shapeX={shapeX} shapeY={shapeY} />
             <Webcam
                 ref={webcamRef}
                 style={{

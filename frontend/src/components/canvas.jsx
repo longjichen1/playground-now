@@ -33,27 +33,31 @@ class Canvas extends Component {
         return indices;
     };
 
+    componentDidUpdate() {
+        console.log(this.props.shapeX, this.props.shapeY, "IN CANVAS");
+    }
+
     render() {
         return (
             <div>
                 <Stage width={window.innerWidth} height={window.innerHeight}>
                     <Layer>
                         <PolygonP
-                            x={(this.state.shapeIndices[0] * window.innerWidth) / 6}
-                            y={(2 * window.innerHeight) / 3}
+                            shapeX={this.props.shapeX}
+                            shapeY={this.props.shapeY}
                             targetX={(this.state.targetIndices[0] * window.innerWidth) / 6}
                             targetY={window.innerHeight / 3}
                             sides={3}
                             fill={this.state.colors[0]}
                         />
-                        <PolygonP
+                        {/* <PolygonP
                             x={(this.state.shapeIndices[1] * window.innerWidth) / 6}
                             y={(2 * window.innerHeight) / 3}
                             targetX={(this.state.targetIndices[1] * window.innerWidth) / 6}
                             targetY={window.innerHeight / 3}
                             sides={4}
                             fill={this.state.colors[1]}
-                        />
+                        /> */}
                         <CircleP
                             x={(this.state.shapeIndices[2] * window.innerWidth) / 6}
                             y={(2 * window.innerHeight) / 3}
