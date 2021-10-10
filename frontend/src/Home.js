@@ -1,4 +1,4 @@
-import React, { useRef, useState , useEffect, Component} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
@@ -8,9 +8,11 @@ import { pinchGesture } from "./pinch";
 import "./App.css";
 import Canvas from "./components/canvas";
 import background from "./assets/topo.jpg";
-import {Button, Navbar, Container} from 'react-bootstrap';
-import { getAuth, signOut } from '@firebase/auth';
-import Nav from './Nav';
+import { Button, Navbar, Container } from "react-bootstrap";
+import { getAuth, signOut } from "@firebase/auth";
+import Nav from "./Nav";
+import { drawHand } from "./utilities";
+
 let net = null;
 
 async function setup() {
@@ -20,23 +22,26 @@ async function setup() {
 
 setup();
 
-function Home({history}) {
+function Home({ history }) {
+    const webcamRef = useRef(null);
+    const canvasRef = useRef(null);
+
     const logout = () => {
         signOut(auth)
             .then(() => {
-                localStorage.removeItem('token')
-                history.push('/')
+                localStorage.removeItem("token");
+                history.push("/");
             })
-            .catch((e) => alert(e.message))
-    }
+            .catch((e) => alert(e.message));
+    };
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem("token");
 
         if (!token) {
-            history.push('/')
+            history.push("/");
         }
-    },[])
+    }, []);
     const auth = getAuth();
     const user = auth.currentUser;
 
@@ -47,9 +52,6 @@ function Home({history}) {
     const [curY, setCurY] = useState(0);
     const [active, setActive] = useState(false);
     let move = false;
-
-
-    const webcamRef = useRef(null);
 
     const runHandPose = async () => {
         setInterval(() => {
@@ -64,11 +66,14 @@ function Home({history}) {
             webcamRef.current.video.readyState === 4
         ) {
             const video = webcamRef.current.video;
-            const videoWidth = webcamRef.current.video.videowidth;
-            const videoHeight = webcamRef.current.video.height.videoHeight;
+            const videoWidth = webcamRef.current.video.videoWidth;
+            const videoHeight = webcamRef.current.video.videoHeight;
 
             webcamRef.current.video.width = videoWidth;
             webcamRef.current.video.height = videoHeight;
+
+            canvasRef.current.width = videoWidth;
+            canvasRef.current.height = videoHeight;
 
             const hand = await net.estimateHands(video);
 
@@ -85,6 +90,9 @@ function Home({history}) {
                     move = false;
                 }
             }
+
+            const ctx = canvasRef.current.getContext("2d");
+            drawHand(hand, ctx, move);
 
             if (hand.length == 1 && move) {
                 setX(
@@ -127,32 +135,27 @@ function Home({history}) {
         <div
             style={{
                 backgroundImage: `url(${background})`,
-               
             }}
         >
+            <Navbar className="bg-dark" variant="dark">
+                <Container>
+                    <Navbar.Brand href="#home" className="align-center">
+                        <img
+                            alt=""
+                            src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78587/sandbox-clipart-md.png"
+                            width="80"
+                            height="50"
+                            className="d-inline-block align-center text-align-center"
+                        />{" "}
+                        <span className="align-center p-3 display-6">Welcome, {user && user.displayName}</span>
+                    </Navbar.Brand>
+                    <Button variant="primary" onClick={logout}>
+                        Logout
+                    </Button>
+                </Container>
+            </Navbar>
 
-                
-        <Navbar className="bg-dark" variant="dark">
-            <Container>
-                <Navbar.Brand href="#home" className="align-center">
-                    <img
-                        alt=""
-                        src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78587/sandbox-clipart-md.png"
-                        width="80"
-                        height="50"
-                        className="d-inline-block align-center text-align-center"
-                    />{' '}
-                    <span className="align-center p-3 display-6">Welcome, {user && user.displayName}</span>
-                </Navbar.Brand>
-                <Button variant = "primary" onClick={logout}>
-                    Logout
-                </Button>
-            </Container>
-        </Navbar>
-            
-
-
-            <Canvas className="canvas" shapeX={shapeX} shapeY={shapeY} curX={curX} curY={curY} active={active} />
+            <Canvas shapeX={shapeX} shapeY={shapeY} curX={curX} curY={curY} active={active} />
 
             <Webcam
                 ref={webcamRef}
@@ -165,6 +168,20 @@ function Home({history}) {
                     height: 180,
                 }}
                 mirrored
+            />
+
+            <canvas
+                ref={canvasRef}
+                style={{
+                    textAlign: "center",
+                    position: "fixed",
+                    bottom: 0,
+                    right: 0,
+                    zindex: 9,
+                    width: 240,
+                    height: 180,
+                    transform: "scaleX(-1)",
+                }}
             />
         </div>
     );
