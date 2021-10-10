@@ -33,10 +33,6 @@ class Canvas extends Component {
         return indices;
     };
 
-    componentDidUpdate() {
-        console.log(this.props.shapeX, this.props.shapeY, "IN CANVAS");
-    }
-
     render() {
         return (
             <div>
@@ -45,6 +41,7 @@ class Canvas extends Component {
                         <PolygonP
                             shapeX={this.props.shapeX}
                             shapeY={this.props.shapeY}
+                            moving={this.props.moving}
                             targetX={(this.state.targetIndices[0] * window.innerWidth) / 6}
                             targetY={window.innerHeight / 3}
                             sides={3}

@@ -3,7 +3,7 @@ import { RegularPolygon } from "react-konva";
 
 class PolygonP extends Component {
     state = {
-        isDragging: false,
+        isDragging: this.props.moving,
         radius: 70,
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight,
@@ -14,8 +14,9 @@ class PolygonP extends Component {
         targetReached: false,
     };
 
-    componentDidUpdate() {
-        console.log(this.props.x, this.props.y, "IN COMPONENT");
+    snapComponent() {
+        if (Math.abs(e.target.x() - this.state.targetX) < 100 && Math.abs(e.target.y() - this.state.targetY) < 100) {
+        }
     }
 
     render() {
@@ -40,17 +41,6 @@ class PolygonP extends Component {
                     stroke={"black"}
                     strokeWidth={this.state.isDragging ? 6 : 3}
                     lineJoin={"round"}
-                    onMouseDown={() => {
-                        this.setState({ isDragging: true });
-                    }}
-                    onMouseUp={() => {
-                        this.setState({ isDragging: false });
-                    }}
-                    onDragStart={() => {
-                        this.setState({
-                            isDragging: true,
-                        });
-                    }}
                     onDragEnd={(e) => {
                         let finalX = e.target.x();
                         let finalY = e.target.y();
@@ -70,12 +60,6 @@ class PolygonP extends Component {
                             y: finalY,
                             targetReached,
                         });
-                    }}
-                    dragBoundFunc={(pos) => {
-                        return {
-                            x: Math.min(Math.max(pos.x, 65), this.state.windowWidth - this.state.radius + 10),
-                            y: Math.min(Math.max(pos.y, 70), this.state.windowHeight - this.state.radius / 2),
-                        };
                     }}
                 />
             </React.Fragment>
