@@ -7,7 +7,7 @@ import * as fp from "fingerpose";
 import { pinchGesture } from "./pinch";
 import "./App.css";
 import Canvas from "./components/canvas";
-import background from "./assets/background.jpeg";
+import background from "./assets/topo.jpg";
 import {Button, Navbar, Container} from 'react-bootstrap';
 import { getAuth, signOut } from '@firebase/auth';
 import Nav from './Nav';
@@ -127,12 +127,12 @@ function Home({history}) {
         <div
             style={{
                 backgroundImage: `url(${background})`,
-                backgroundSize: document.body.scrollHeight * 1.35,
+               
             }}
         >
 
                 
-        <Navbar className="bg-info" variant="dark">
+        <Navbar className="bg-dark" variant="dark">
             <Container>
                 <Navbar.Brand href="#home" className="align-center">
                     <img
@@ -142,9 +142,9 @@ function Home({history}) {
                         height="50"
                         className="d-inline-block align-center text-align-center"
                     />{' '}
-                    Sandbox     Welcome, {user && user.displayName}
+                    <span className="align-center p-3">Welcome, {user && user.displayName}</span>
                 </Navbar.Brand>
-                <Button variant = "secondary" onClick={logout}>
+                <Button variant = "primary" onClick={logout}>
                     Logout
                 </Button>
             </Container>
@@ -152,7 +152,7 @@ function Home({history}) {
             
 
 
-            <Canvas shapeX={shapeX} shapeY={shapeY} curX={curX} curY={curY} active={active} />
+            <Canvas className="canvas" shapeX={shapeX} shapeY={shapeY} curX={curX} curY={curY} active={active} />
 
             <Webcam
                 ref={webcamRef}

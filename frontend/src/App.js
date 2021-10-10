@@ -24,10 +24,10 @@ function App() {
     return (
         <div className="App">
             
-            <Route exact path="/" component={Login}/>
+            <Route exact path="/" component={Signup}/>
             <Route exact path="/home" component = {Home}/>
             <Route exact path="/matter" component = {Matter}/>
-            <Route exact path='/signup' component={Signup}/>
+            <Route exact path='/login' component={Login}/>
         </div>
     );
 }

@@ -18,7 +18,7 @@ class Canvas extends Component {
 
     constructor() {
         super();
-        document.body.style.cursor = "none";
+
         this.setState({
             shapeIndices: this.shuffleIndices(this.state.shapeIndices),
             targetIndices: this.shuffleIndices(this.state.targetIndices),
@@ -70,7 +70,7 @@ class Canvas extends Component {
     render() {
         return (
             <div>
-                <Stage width={window.innerWidth} height={window.innerHeight}>
+                <Stage width={window.innerWidth} height={675}>
                     <Layer>
                         <PolygonP
                             shapeX={

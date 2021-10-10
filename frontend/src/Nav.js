@@ -7,7 +7,7 @@ function Nav (){
             <Container>
                 <Navbar.Brand href="#home" className="align-center">
                 <img alt="" src="/logo.svg" width="30" height="50" className="d-inline-block align-center text-align-center"/>{' '}
-                    Sandbox
+                    Playground
                 </Navbar.Brand>
             </Container>
         </Navbar>
