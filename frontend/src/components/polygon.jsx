@@ -7,12 +7,16 @@ class PolygonP extends Component {
         radius: 70,
         windowWidth: window.innerWidth,
         windowHeight: window.innerHeight,
-        x: this.props.x,
-        y: this.props.y,
+        x: this.props.shapeX,
+        y: this.props.shapeY,
         targetX: this.props.targetX,
         targetY: this.props.targetY,
         targetReached: false,
     };
+
+    componentDidUpdate() {
+        console.log(this.props.x, this.props.y, "IN COMPONENT");
+    }
 
     render() {
         return (
@@ -27,8 +31,8 @@ class PolygonP extends Component {
                     lineJoin={"round"}
                 />
                 <RegularPolygon
-                    x={this.state.x}
-                    y={this.state.y}
+                    x={this.props.shapeX}
+                    y={this.props.shapeY}
                     sides={this.props.sides}
                     radius={this.state.radius}
                     draggable={!this.state.targetReached}
