@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import DraggableShape from "./components/draggableShape";
+
 import background from "./assets/background.jpeg";
 import Matter from './Matter';
 import Home from './Home';
@@ -20,7 +20,7 @@ const firebaseConfig={
 initializeApp(firebaseConfig);
 
 function App() {
-    return(
+    return (
         <div className="App">
             <Route exact path="/" component={Login}/>
             <Route exact path="/home" component = {Home}/>

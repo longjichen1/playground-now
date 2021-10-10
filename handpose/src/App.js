@@ -2,30 +2,18 @@ import React, { useRef, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
+import "./App.css";
 import { findByPlaceholderText } from "@testing-library/react";
 import * as fp from "fingerpose";
 import { pinchGesture } from "./pinch";
-import "./App.css";
-import Canvas from "./components/canvas";
-import background from "./assets/background.jpeg";
 
-let net = null;
-
-async function setup() {
-    net = await handpose.load();
-    console.log("Handpose model loaded.");
-}
-
-setup();
-
-function Home() {
-    const [shapeX, setX] = useState(0);
-    const [shapeY, setY] = useState(0);
-    const [moving, setMove] = useState(false);
-
+function App() {
     const webcamRef = useRef(null);
 
     const runHandPose = async () => {
+        const net = await handpose.load();
+        console.log("Handpose model loaded.");
+
         setInterval(() => {
             detect(net);
         }, 100);
@@ -45,9 +33,9 @@ function Home() {
             webcamRef.current.video.height = videoHeight;
 
             const hand = await net.estimateHands(video);
-
-            setMove(true);
-
+            if (hand.length == 1) {
+                console.log(hand[0].boundingBox.topLeft);
+            }
             if (hand.length > 0) {
                 const GE = new fp.GestureEstimator([pinchGesture]);
 
@@ -55,23 +43,9 @@ function Home() {
 
                 try {
                     console.log(gesture.gestures[0].name);
-                    setMove(true);
                 } catch (TypeError) {
                     console.log("no pinch");
-                    setMove(false);
                 }
-            }
-
-            if (hand.length == 1 && moving) {
-                setX(
-                    window.innerWidth -
-                        (((hand[0].boundingBox.bottomRight[0] + hand[0].boundingBox.topLeft[0]) / 2 - 20) / 600.0) *
-                            window.innerWidth
-                );
-                setY(
-                    (((hand[0].boundingBox.bottomRight[1] + hand[0].boundingBox.topLeft[1]) / 2 - 15) / 440.0) *
-                        window.innerHeight
-                );
             }
         }
     };
@@ -79,26 +53,23 @@ function Home() {
     runHandPose();
 
     return (
-        <div
-            style={{
-                backgroundImage: `url(${background})`,
-                backgroundSize: document.body.scrollHeight * 1.35,
-            }}
-        >
-            <Canvas shapeX={shapeX} shapeY={shapeY} moving={moving} />
+        <div className="App">
             <Webcam
                 ref={webcamRef}
                 style={{
-                    position: "fixed",
-                    bottom: 0,
+                    position: "absolute",
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                    left: 0,
                     right: 0,
+                    textAlign: "center",
                     zindex: 9,
-                    width: 240,
-                    height: 180,
+                    width: 640,
+                    height: 480,
                 }}
-                mirrored
             />
         </div>
     );
 }
-export default Home;
+
+export default App;
