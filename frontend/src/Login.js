@@ -30,25 +30,29 @@ const Login = ({history}) => {
     }
     return(
     <>
-    <Nav/>
+    <div style={{ height:"750px", fontSize:"24px"}}>
+        <Nav/>
+        <br/>
         <Form className="p-4">
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Group className="mb-3 bg-primary border rounded border-dark"z controlId="formBasicEmail">
                 <Form.Label className="text-left">Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" name="email" value={email} onChange={e=>setEmail(e.target.value)}/>
-                    <Form.Text className="text-muted">
-                        
-                    </Form.Text>
+                    <Form.Control type="email" className="border border-dark" placeholder="Enter email" name="email" value={email} onChange={e=>setEmail(e.target.value)}/>
+
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Group className="mb-3 bg-primary border rounded border-dark" controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={e=>setPassword(e.target.value)}/>
+                <Form.Control type="password" className="border border-dark" placeholder="Password" name="password" value={password} onChange={e=>setPassword(e.target.value)}/>
             </Form.Group>
-
-            <Button variant="primary" onClick={onLogin}>
+            <br/>
+            <Button variant="primary" onClick={onLogin} className="bg-primary border-2 border-dark">
                 {loading? 'Logging you in...': 'Login'}
             </Button>
+            <br/>
+            <br/>
+            <a href="/" className="btn btn-success border-2 border-dark" role="button" aria-pressed="true">Don't have an account?</a>
         </Form>
+        </div>
     </>
     )
 

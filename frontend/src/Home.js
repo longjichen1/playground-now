@@ -137,12 +137,12 @@ function Home({history}) {
                 <Navbar.Brand href="#home" className="align-center">
                     <img
                         alt=""
-                        src="https://mpng.subpng.com/20171127/e92/transparent-sand-castle-png-clipart-picture-5a1ca2a4c75547.2673685315118260848165.jpg"
-                        width="50"
+                        src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78587/sandbox-clipart-md.png"
+                        width="80"
                         height="50"
                         className="d-inline-block align-center text-align-center"
                     />{' '}
-                    <span className="align-center p-3">Welcome, {user && user.displayName}</span>
+                    <span className="align-center p-3 display-6">Welcome, {user && user.displayName}</span>
                 </Navbar.Brand>
                 <Button variant = "primary" onClick={logout}>
                     Logout

@@ -3,11 +3,11 @@ import {Container, Navbar, Button} from 'react-bootstrap';
 
 function Nav (){
     return(
-        <Navbar className="bg-primary" variant="dark">
+        <Navbar className="bg-dark" variant="dark">
             <Container>
-                <Navbar.Brand href="#home" className="align-center">
-                <img alt="" src="/logo.svg" width="30" height="50" className="d-inline-block align-center text-align-center"/>{' '}
-                    Playground
+                <Navbar.Brand  className="align-center">
+                <img alt="text" src="https://creazilla-store.fra1.digitaloceanspaces.com/cliparts/78587/sandbox-clipart-md.png" width="80" height="50" className="d-inline-block align-center text-align-center"/>{' '}
+                    <span className="p-4 display-6 ">Playground</span>
                 </Navbar.Brand>
             </Container>
         </Navbar>
