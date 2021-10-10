@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Navbar, Container} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 
@@ -29,12 +29,27 @@ const Login = ({history}) => {
             .finally(() => setLoading(false))
     }
     return(
-        <Form className="m-auto">
+    <>
+      <Navbar className="bg-primary" variant="dark">
+    <Container>
+      <Navbar.Brand href="#home" className="align-center">
+        <img
+          alt=""
+          src="/logo.svg"
+          width="30"
+          height="50"
+          className="d-inline-block align-center text-align-center"
+        />{' '}
+      Sandbox
+      </Navbar.Brand>
+    </Container>
+  </Navbar>
+        <Form className="p-4">
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label className="text-left">Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" name="email" value={email} onChange={e=>setEmail(e.target.value)}/>
                     <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
+                        
                     </Form.Text>
             </Form.Group>
 
@@ -47,7 +62,7 @@ const Login = ({history}) => {
                 {loading? 'Logging you in...': 'Login'}
             </Button>
         </Form>
-
+    </>
     )
 
 }

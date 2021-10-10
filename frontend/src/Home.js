@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState , useEffect, Component} from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as handpose from "@tensorflow-models/handpose";
 import Webcam from "react-webcam";
@@ -8,6 +8,8 @@ import { pinchGesture } from "./pinch";
 import "./App.css";
 import Canvas from "./components/canvas";
 import background from "./assets/background.jpeg";
+import {Button, Navbar, Container} from 'react-bootstrap';
+import { getAuth, signOut } from '@firebase/auth';
 
 let net = null;
 
@@ -18,7 +20,26 @@ async function setup() {
 
 setup();
 
-function Home() {
+function Home({history}) {
+    const logout = () => {
+        signOut(auth)
+            .then(() => {
+                localStorage.removeItem('token')
+                history.push('/')
+            })
+            .catch((e) => alert(e.message))
+    }
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            history.push('/')
+        }
+    },[])
+    const auth = getAuth();
+    const user = auth.currentUser;
+
     const [shapeX, setX] = useState(0);
     const [shapeY, setY] = useState(0);
     let move = true;
@@ -83,6 +104,24 @@ function Home() {
                 backgroundSize: document.body.scrollHeight * 1.35,
             }}
         >
+                
+      <Navbar className="bg-primary" variant="dark">
+    <Container>
+      <Navbar.Brand href="#home" className="align-center">
+        <img
+          alt=""
+          src="/logo.svg"
+          width="30"
+          height="50"
+          className="d-inline-block align-center text-align-center"
+        />{' '}
+      Sandbox
+      </Navbar.Brand>
+    </Container>
+  </Navbar>
+            <Button variant = "primary" onClick={logout}>
+                {user && user.displayName}
+            </Button>
             <Canvas shapeX={shapeX} shapeY={shapeY} />
             <Webcam
                 ref={webcamRef}

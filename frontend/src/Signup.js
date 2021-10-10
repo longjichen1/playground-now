@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Navbar, Container} from 'react-bootstrap';
 
 import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 
@@ -32,7 +32,24 @@ const Signup = ({history}) => {
             .finally(() => setLoading(false))
     }
     return(
-        <Form className="m-auto">
+        
+        <>
+  <Navbar bg="dark" variant="dark">
+    <Container>
+      <Navbar.Brand href="#home">
+        <img
+          alt=""
+          src="/logo.svg"
+          width="30"
+          height="50"
+          className="d-inline-block align-center text-align-center"
+        />{' '}
+      Sandbox
+      </Navbar.Brand>
+    </Container>
+  </Navbar>
+
+        <Form className="p-4">
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <Form.Label>Name</Form.Label>
                 <Form.Control type="name" placeholder="Name" name="name" value={name} onChange={e=>setName(e.target.value)}/>
@@ -42,7 +59,7 @@ const Signup = ({history}) => {
                 <Form.Label className="text-left">Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" name="email" value={email} onChange={e=>setEmail(e.target.value)}/>
                     <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
+                        
                     </Form.Text>
             </Form.Group>
 
@@ -54,10 +71,12 @@ const Signup = ({history}) => {
             <Button variant="primary" onClick={onSignup}>
                 {loading? 'Create user...':'Signup'}
             </Button>
-            <Button variant="primary">
-                <Link to='/login'>Login</Link>
-            </Button>
+            <br/>
+            <br/>
+                <a href="/login" className="btn btn-primary" role="button" aria-pressed="true">Login</a>
+            
         </Form>
+        </>
     )
 
 }
